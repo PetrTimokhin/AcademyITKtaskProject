@@ -18,8 +18,9 @@ next_user_id = 1
 
 # --- Эндпойнты ---
 
-# Изменения здесь: Добавлен параметр name_filter
-@app.get("/users", response_model=List[UserResponse], summary="Получение всех пользователей с фильтром")
+# Добавлен параметр name_filter
+@app.get("/users", response_model=List[UserResponse],
+                        summary="Получение всех пользователей с фильтром")
 async def list_users(
         name_filter: Optional[str] = None):  # name_filter - query-параметр
     """
@@ -62,7 +63,7 @@ async def get_user(user_id: int):
 
 
 @app.post("/users", response_model=UserResponse,
-          status_code=status.HTTP_201_CREATED, summary="Create a new user")
+          status_code=status.HTTP_201_CREATED, summary="Создание нового пользователя")
 async def create_user(user_data: UserCreate):
     """
     Создает нового пользователя.
@@ -110,3 +111,7 @@ async def delete_user(user_id: int):
     del fake_db[user_id]
     # FastAPI автоматически вернет 204 No Content, если возвращаемое значение None
     return
+
+
+# if __name__ == '__main__':
+#     uvicorn.run("main:app", reload=True)
